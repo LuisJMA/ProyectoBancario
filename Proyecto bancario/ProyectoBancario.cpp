@@ -2,7 +2,7 @@
 #include<fstream>
 #include<string>
 #include<sstream>
-#include<vector>
+
 #define Archivo "clients.csv"
 using namespace std;
 
@@ -109,7 +109,7 @@ void ConsultNumbCuenta()
 		   }
 		if(contador==1 && existe== false )
 		{
-			cout<<"CLiente no registrado "<<endl;
+			cout<<"CLIENTE NO REGISTRADO "<<endl;
 			
 		}   
 		archivo.close();  
@@ -149,7 +149,7 @@ void ConsultCI()
 
             if(usuario.CI.compare(numCI_buscar) == 0)
 			{
-             verdadero= true;   
+             existe= true;   
             cout<<"================================"<<endl;      
 	    	cout<<"Nombre: "<<usuario.Cliente<<endl;
 	    	cout<<"Numero Cuenta: "<<usuario.NumbCuenta<<endl;
@@ -173,7 +173,7 @@ void ConsultCI()
        
        	
 		   }	
-		   if(contador==1 && existe== true)
+		   if(contador==1 && existe== false)
 		   {
        		cout<<"CLIENTE NO REGISTRADO"<<endl;
        		
@@ -182,6 +182,76 @@ void ConsultCI()
 }
 
 
+void ConsultName()
+{
+		char delimitador = ',';
+		int contador;
+    	USUARIO usuario;
+		string linea;
+  		ifstream archivo(Archivo, ios::in);
+    	string nombre_buscar;
+    	string verdadero= "true";
+
+       
+        
+		
+			
+		cout<<"Ingrese nombre del Cliente: "<<endl;
+		cin.ignore();// esto elimina los espacios en blaco para que se pueda ejecutar bien el getline
+		getline(cin,nombre_buscar);// lee el nombre de la pelicula completo con espacios
+		
+        
+		
+		bool existe = false;
+        getline(archivo,linea);
+        while (getline(archivo,linea))
+        {
+             
+            stringstream stream(linea);
+            
+	        getline(stream, usuario.CI, delimitador);
+	        getline(stream, usuario.Cliente, delimitador);
+	        getline(stream, usuario.NumbCuenta, delimitador);
+	        getline(stream, usuario.TipCuenta, delimitador);
+	        getline(stream, usuario.Estado, delimitador);
+	        
+
+            if(nombre_buscar.compare(usuario.Cliente) == 0)
+			{
+             existe = true ;   
+            cout<<"================================"<<endl;      
+	    	cout<<"Nombre: "<<usuario.Cliente<<endl;
+	    	cout<<"Numero Cuenta: "<<usuario.NumbCuenta<<endl;
+	    	cout<<"CI del Cliente: "<<usuario.CI<<endl;
+	    	
+	    	if(usuario.Estado == verdadero)
+			{
+				cout<<"Estado de la cuenta: "<<"SUSPENDIDA"<<endl;
+			}
+        	
+            else 
+			{
+				cout<<"Estado de la cuenta: "<<"ACTIVA"<<endl;
+			}
+       		}
+           	 else
+				{
+				
+			
+				contador=1;
+			
+				}
+           	 
+            
+       	}
+       	
+		if(contador==1 && existe==false)
+		 {
+		 	cout<<"CLIENTE NO REGISTRADO"<<endl;
+		 }   
+       	
+       	archivo.close();
+		   }
 
 
 
@@ -223,7 +293,7 @@ int main()
 				}
 				else if(k==3)
 				{
-					
+					ConsultName();
 					break;
 				}
 				else
