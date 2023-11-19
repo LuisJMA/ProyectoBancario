@@ -116,6 +116,72 @@ void ConsultNumbCuenta()
 		   }
 
 
+void ConsultCI()
+{
+		int contador=1;
+    	char delimitador = ',';
+    	USUARIO usuario;
+		string linea;
+  		ifstream archivo(Archivo);
+    	string numCI_buscar;
+    	string verdadero= "true" ;
+			
+		cout<<"Ingrese Cedula a buscar: "<<endl;
+		cin>>numCI_buscar;
+		
+		bool existe= false; 
+		
+        
+		
+		
+        getline(archivo,linea);
+        while (getline(archivo,linea))
+        {
+             
+            stringstream stream(linea);
+            
+	        getline(stream, usuario.CI, delimitador);
+	        getline(stream, usuario.Cliente, delimitador);
+	        getline(stream, usuario.NumbCuenta, delimitador);
+	        getline(stream, usuario.TipCuenta, delimitador);
+	        getline(stream, usuario.Estado, delimitador);
+	       
+
+            if(usuario.CI.compare(numCI_buscar) == 0)
+			{
+             verdadero= true;   
+            cout<<"================================"<<endl;      
+	    	cout<<"Nombre: "<<usuario.Cliente<<endl;
+	    	cout<<"Numero Cuenta: "<<usuario.NumbCuenta<<endl;
+	    	cout<<"CI del Cliente: "<<usuario.CI<<endl;
+	    	
+	    	if(usuario.Estado == verdadero)
+			{
+				cout<<"Estado de la cuenta: "<<"SUSPENDIDA"<<endl;
+			}
+        	
+            else 
+			{
+				cout<<"Estado de la cuenta: "<<"ACTIVA"<<endl;
+			}
+       		}
+       
+		   else
+		   {
+		   	contador=1;
+		   }
+       
+       	
+		   }	
+		   if(contador==1 && existe== true)
+		   {
+       		cout<<"CLIENTE NO REGISTRADO"<<endl;
+       		
+		   }
+		   archivo.close();
+}
+
+
 
 
 
@@ -151,7 +217,7 @@ int main()
 				}
 				else if(k==2)
 				{
-					
+					ConsultCI();
 					
 					break;
 				}
