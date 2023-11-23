@@ -303,7 +303,7 @@ void suspendercuentas()
 							usuario.Estado= "false" ;
 							cout << "CUENTA ACTIVADA"<<endl;	
 						}
-						else if(usuario.Estado== "false")
+						else
 						{
 							cout<<"La cuenta ya esta activa"<<endl;
 						}
@@ -315,7 +315,7 @@ void suspendercuentas()
                         usuario.Estado = "true";
                         cout << "CUENTA SUSPENDIDA" << endl;
                     }
-                    else if(usuario.Estado== "false")
+                    else 
 					{
 							cout<<"La cuenta ya esta suspendida"<<endl;
 						
