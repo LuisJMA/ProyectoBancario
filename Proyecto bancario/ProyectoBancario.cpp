@@ -264,16 +264,16 @@ void suspendercuentas()
   		ofstream oarchivo("loquesea.csv");
   		
     	string num_buscar;
-    	string verdadero= "true" ;
+    	
 		int opcion;	
 		cout<<"Ingrese Num de cuenta a buscar: "<<endl;
 		cin>>num_buscar;
-		string cuenta= "false";
+		
 		
         
 		
 		bool existe = false;
-        getline(archivo,linea);
+        
         while (getline(archivo,linea))
         {
              
@@ -289,27 +289,57 @@ void suspendercuentas()
             if(num_buscar.compare(usuario.NumbCuenta) == 0)
 			{
 				existe= true;
-				cout<<"Que opcion quiere realizar"<<endl;cout<<"1. ACTIVAR CUENTA"<<endl;cout<<"2. SUSPENDER CUENTA"<<endl;cin>>opcion;
+				cout<<"Que opcion quiere realizar"<<endl;
+				cout<<"1. ACTIVAR CUENTA"<<endl;
+				cout<<"2. SUSPENDER CUENTA"<<endl;
+				cin>>opcion;
 				
 				switch(opcion)
 				{
 					case 1:
-						if(usuario.Estado == verdadero)
+						if(usuario.Estado == "true" )
 						{
 							
-							usuario.Estado='false' ;
-							getline(cin,usuario.Estado);	
+							usuario.Estado= "false" ;
+							cout << "CUENTA ACTIVADA"<<endl;	
 						}
-						cout << "CUENTA ACTIVADA"<<endl;
-				}
-               
+						else if(usuario.Estado== "false")
+						{
+							cout<<"La cuenta ya esta activa"<<endl;
+						}
+						break;
+					
+					case 2:
+                    if (usuario.Estado == "false")
+                    {
+                        usuario.Estado = "true";
+                        cout << "CUENTA SUSPENDIDA" << endl;
+                    }
+                    else if(usuario.Estado== "false")
+					{
+							cout<<"La cuenta ya esta suspendida"<<endl;
+						
+                    
+					}
+               break;
        		}
-       	else{
-       		contador=1;
-       		
-		   }
-		   
+       		// Guarda los cambios en el archivo temporal
+            oarchivo << usuario.CI << delimitador;
+            oarchivo << usuario.Cliente << delimitador;
+            oarchivo << usuario.NumbCuenta << delimitador;
+            oarchivo << usuario.TipCuenta << delimitador;
+            oarchivo << usuario.Estado << "\n";
        	
+		   
+       		}
+       		
+       	else
+        {
+            contador = 1;
+
+            // Guarda la línea original en el archivo temporal
+            oarchivo << linea << "\n";
+        }
        	
 		   }
 		if(contador==1 && existe== false )
@@ -345,6 +375,8 @@ int main()
 			case 1:
 				LeerArchivo();
 				break;
+			
+			
 			case 2:
 				cout<<"1. Buscar por numero de cuenta"<<endl;cout<<"2. Buscar por cedula"<<endl; cout<<"3. Buscar por nombre"<<endl; cin>>k;
 				
@@ -371,6 +403,8 @@ int main()
 					
 				}	
 				break;
+				
+				
 				case 3:
 					suspendercuentas();
 					break;
