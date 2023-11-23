@@ -254,7 +254,74 @@ void ConsultName()
 		   }
 
 
+void suspendercuentas()
+{
+		int contador;
+    	char delimitador = ',';
+    	USUARIO usuario;
+		string linea;
+  		ifstream archivo(Archivo);
+  		ofstream oarchivo("loquesea.csv");
+  		
+    	string num_buscar;
+    	string verdadero= "true" ;
+		int opcion;	
+		cout<<"Ingrese Num de cuenta a buscar: "<<endl;
+		cin>>num_buscar;
+		string cuenta= "false";
+		
+        
+		
+		bool existe = false;
+        getline(archivo,linea);
+        while (getline(archivo,linea))
+        {
+             
+            stringstream stream(linea);
+            
+	        getline(stream, usuario.CI, delimitador);
+	        getline(stream,usuario.Cliente, delimitador);
+	        getline(stream, usuario.NumbCuenta, delimitador);
+	        getline(stream, usuario.TipCuenta, delimitador);
+	        getline(stream, usuario.Estado, delimitador);
+	       
 
+            if(num_buscar.compare(usuario.NumbCuenta) == 0)
+			{
+				existe= true;
+				cout<<"Que opcion quiere realizar"<<endl;cout<<"1. ACTIVAR CUENTA"<<endl;cout<<"2. SUSPENDER CUENTA"<<endl;cin>>opcion;
+				
+				switch(opcion)
+				{
+					case 1:
+						if(usuario.Estado == verdadero)
+						{
+							
+							usuario.Estado='false' ;
+							getline(cin,usuario.Estado);	
+						}
+						cout << "CUENTA ACTIVADA"<<endl;
+				}
+               
+       		}
+       	else{
+       		contador=1;
+       		
+		   }
+		   
+       	
+       	
+		   }
+		if(contador==1 && existe== false )
+		{
+			cout<<"CLIENTE NO REGISTRADO "<<endl;
+			
+		}   
+		archivo.close(); 
+		oarchivo.close();
+		remove(Archivo);
+    	rename("loquesea.csv", Archivo);
+}
 
 
 int main()
@@ -270,6 +337,7 @@ int main()
 			cout << "Menu" << endl;
 			cout << "(1) MOstrar datos del cliente" << endl;
 			cout << "(2) BUscar cliente "<<endl;
+			cout << "(3) SUSPENDER/ACTIVAR CUENTAS"<<endl;
 			
 		cin>>p;
 		switch(p)
@@ -302,7 +370,10 @@ int main()
 					break;
 					
 				}	
-				
+				break;
+				case 3:
+					suspendercuentas();
+					break;
 		}
 		
 		cout<<""<<endl;
